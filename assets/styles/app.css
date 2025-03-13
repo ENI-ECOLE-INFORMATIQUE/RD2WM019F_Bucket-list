@@ -24,6 +24,15 @@ main{
     background-color: #FFF1E6;
 }
 
+main a{
+    color:#8c6956;
+}
+
+.wish-credit{
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
 footer{
     padding: 1.5rem 0;
     text-align: center;

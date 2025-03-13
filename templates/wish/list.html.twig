@@ -4,4 +4,16 @@
 
 {% block body %}
 <h2>All Wishes !</h2>
+    <ul>
+    {% for wish in wishes %}
+        <li>
+            <article>
+                <a href="{{ path('wish_detail', {'id': wish.id}) }}"
+                title="View this wish in details">{{ wish.title }}</a>
+            </article>
+        </li>
+    {% else %}
+    <li>Pas de Wish dans la bd</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
