@@ -30,6 +30,15 @@
     </div>
 </header>
 <main class="flex-grow-1">
+    {# affiche les messages flash #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="alert alert-{{ label }}  alert-dismissible fade show " role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endfor %}
     <div class="container">
         {% block body %}{% endblock %}
     </div>

@@ -10,6 +10,14 @@
             {# le filtre nl2br convertit les sauts de ligne du texte en balises <br #}
             <p class="card-text">{{ wish.description | nl2br }}</p>
             <p class="card-text">Sans nl2br: {{ wish.description }}</p>
+
+            <div class="text-center">
+                <a href="{{ path('wish_delete', {'id': wish.id,'_token':csrf_token('delete'~wish.id)}) }}"
+                   class="btn btn-danger mt-2"
+                   title="Delete wish">Delete</a>
+                <a href="{{ path('wish_update', {'id': wish.id}) }}" class="btn btn-secondary mt-2" title="Edit wish">Edit</a>
+            </div>
+
         </div>
     </div>
 

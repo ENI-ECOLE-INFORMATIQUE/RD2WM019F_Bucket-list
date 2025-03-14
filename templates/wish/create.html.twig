@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add your wishes | {{ parent() }}{% endblock %}
+
+{% block body %}
+    {%  if  wishForm.vars.value.id ==null%}
+        <h2>Add you wishes !</h2>
+    {% else %}
+        <h2>Update you wishes !</h2>
+    {% endif %}
+    {{ form_start(wishForm) }}
+    {{ form_row(wishForm.title) }}
+    {{ form_row(wishForm.description) }}
+    {{ form_row(wishForm.author) }}
+    {{ form_row(wishForm.isPublished) }}
+    <button type="submit" class="btn btn-sm btn-primary">
+        {{ wishForm.vars.value.id == null ? 'Create' : 'Modify' }}
+    </button>
+    {{ form_end(wishForm) }}
+{% endblock %}
