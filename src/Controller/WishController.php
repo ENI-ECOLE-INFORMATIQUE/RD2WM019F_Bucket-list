@@ -44,7 +44,7 @@ class WishController extends AbstractController
         //On vérifie si le formulaire a été soumis et que les données soumises sont valides.
         if($wishForm->isSubmitted() && $wishForm->isValid()){
             //Hydrater les propriétés absentes du formulaire
-            $wish->setIsPublished(true);
+//            $wish->setIsPublished(true);
             //Sauvegarde dans la Bdd
             $em->persist($wish);
             $em->flush();

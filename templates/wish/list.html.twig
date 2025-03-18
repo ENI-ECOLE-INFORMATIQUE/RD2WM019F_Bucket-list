@@ -9,7 +9,7 @@
         <li>
             <article>
                 <a href="{{ path('wish_detail', {'id': wish.id}) }}"
-                title="View this wish in details">{{ wish.title }}</a>
+                title="View this wish in details">{{ wish.title }} - {{ wish.category.name }}</a>
             </article>
         </li>
     {% else %}

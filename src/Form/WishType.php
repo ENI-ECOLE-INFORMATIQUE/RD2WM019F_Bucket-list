@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Wish;
+use App\Repository\CategoryRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,26 +20,26 @@ class WishType extends AbstractType
         $builder
             ->add('title',
                 TextType::class,
-                ['label'=>'Your idea']
+                ['label' => 'Your idea']
             )
             ->add('description',
                 TextareaType::class,
-                ['label'=>'Please describe it!',
-                    'required'=>false]
+                ['label' => 'Please describe it!',
+                    'required' => false]
             )
             ->add('author',
-                TextType::class,['label'=>'Your name'])
+                TextType::class, ['label' => 'Your name'])
             ->add('isPublished',
-                CheckboxType::class,[
-                'required'=>false,'label'=>'Published'
-            ])
-            ->add('dateCreated', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('dateUpdated', null, [
-                'widget' => 'single_text',
-            ])
-        ;
+                CheckboxType::class, [
+                    'required' => false, 'label' => 'Published'
+                ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $categoryRepository) {
+                    return $categoryRepository->findCategoriesOrderBy();
+                }
+                //toString() défini donc pas besoin de préciser le champs
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

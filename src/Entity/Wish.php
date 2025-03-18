@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: WishRepository::class)]
 class Wish
 {
@@ -58,11 +59,9 @@ class Wish
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $dateUpdated = null;
 
-    public function __construct()
-    {
-        $this->dateCreated = new \DateTimeImmutable();
-        $this->isPublished = false;
-    }
+    #[ORM\ManyToOne(inversedBy: 'wishes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
 
     public function getId(): ?int
@@ -141,4 +140,28 @@ class Wish
 
         return $this;
     }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setDataForNewWish(){
+        $this->dateCreated = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdateDate(){
+        $this->dateUpdated = new \DateTimeImmutable();
+    }
+
+
 }
