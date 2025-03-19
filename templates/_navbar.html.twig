@@ -10,25 +10,40 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('main_home')}}"
+                    <a class="nav-link" href="{{ path('main_home') }}"
                        title="Accueil">Accueil</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('wish_list')}}"
+                    <a class="nav-link" href="{{ path('wish_list') }}"
                        title="All things to do">All wishes</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('wish_create')}}"
-                       title="Add your ideas">Add yours</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('main_about_us')}}"
+                    <a class="nav-link" href="{{ path('main_about_us') }}"
                        title="About us">About us</a>
                 </li>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('wish_create') }}"
+                           title="Add your ideas">Add yours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}"
+                           title="Sign out">Sign out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}"
+                           title="Sign in">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}"
+                           title="Register">Register</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

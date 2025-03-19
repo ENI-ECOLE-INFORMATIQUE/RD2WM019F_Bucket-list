@@ -13,9 +13,13 @@
             <p class="card-text">Sans nl2br: {{ wish.description }}</p>
 
             <div class="text-center">
-                <a href="{{ path('wish_delete', {'id': wish.id,'_token':csrf_token('delete'~wish.id)}) }}"
-                   class="btn btn-danger mt-2"
-                   title="Delete wish">Delete</a>
+
+{#                {% if wish.user == app.user or is_granted("ROLE_ADMIN") %}#}
+                {% if is_granted("WISH_DELETE", wish) %}
+                    <a href="{{ path('wish_delete', {'id': wish.id,'_token':csrf_token('delete'~wish.id)}) }}"
+                       class="btn btn-danger mt-2"
+                       title="Delete wish">Delete</a>
+                {% endif %}
                 <a href="{{ path('wish_update', {'id': wish.id}) }}" class="btn btn-secondary mt-2" title="Edit wish">Edit</a>
             </div>
 
