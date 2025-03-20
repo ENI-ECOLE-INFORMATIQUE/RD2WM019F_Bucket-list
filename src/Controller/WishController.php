@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\WishRepository;
+use App\Utils\Censurator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class WishController extends AbstractController
 {
+
+    public function __construct(private Censurator $censurator)
+    {
+    }
+
     #[Route('/wishes', name: 'wish_list', methods: ['GET'])]
     public function list(WishRepository $wishrepository): Response
     {
@@ -38,7 +44,11 @@ class WishController extends AbstractController
     }
 
     #[Route('/wishes/create', name: 'wish_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(
+        Request                $request,
+        EntityManagerInterface $em,
+        Censurator             $censurator
+    ): Response
     {
         //Création de l'entité vide
         $wish = new Wish();
@@ -54,6 +64,13 @@ class WishController extends AbstractController
             //Sauvegarde dans la Bdd
             //ajout de la relation avec le user
             $wish->setUser($this->getUser());
+            //modéré les propos
+            $wish
+                ->setDescription(
+                    $censurator->purify($wish->getDescription())
+                )->setTitle(
+                    $censurator->purify($wish->getTitle())
+                );
             $em->persist($wish);
             $em->flush();
             //Affiche un message à l'utilisateur sur la prochaine page.
@@ -82,6 +99,14 @@ class WishController extends AbstractController
         $wishForm->handleRequest($request);
         //On vérifie si le formulaire a été soumis et que les données soumises sont valides.
         if ($wishForm->isSubmitted() && $wishForm->isValid()) {
+
+            $wish
+                ->setDescription(
+                    $this->censurator->purify($wish->getDescription())
+                )->setTitle(
+                    $this->censurator->purify($wish->getTitle())
+                );
+
             //Hydrater les propriétés absentes du formulaire
             $wish->setDateUpdated(new \DateTimeImmutable());
             //Sauvegarde dans la Bdd
