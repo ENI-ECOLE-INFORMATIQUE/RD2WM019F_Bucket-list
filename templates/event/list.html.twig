@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Liste des évènements du coin !</h2>
+
+
+    {% for event in events %}
+
+        <div><img src="{{ event.thumbnail }}" alt="{{ event.title_fr }}"></div>
+        <div>{{ event.title_fr }}</div>
+        <div><a href="{{ event.canonicalurl	}}">{{ event.canonicalurl }}</a></div>
+        <div>{{ event.daterange_fr }}</div>
+        <div>{{ event.location_name }}</div>
+        <div>{{ event.location_address }}</div>
+        <div>{{ event.longdescription_fr | raw }}</div>
+
+    {% endfor %}
+
+{% endblock %}
