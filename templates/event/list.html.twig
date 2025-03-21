@@ -4,12 +4,18 @@
 
     <h2>Liste des évènements du coin !</h2>
 
+    <div>
+        {{ form_start(eventSearchForm) }}
+        {{ form_widget(eventSearchForm) }}
+        <button>GO !</button>
+        {{ form_end(eventSearchForm) }}
+    </div>
 
     {% for event in events %}
 
         <div><img src="{{ event.thumbnail }}" alt="{{ event.title_fr }}"></div>
         <div>{{ event.title_fr }}</div>
-        <div><a href="{{ event.canonicalurl	}}">{{ event.canonicalurl }}</a></div>
+        <div><a href="{{ event.canonicalurl }}">{{ event.canonicalurl }}</a></div>
         <div>{{ event.daterange_fr }}</div>
         <div>{{ event.location_name }}</div>
         <div>{{ event.location_address }}</div>
