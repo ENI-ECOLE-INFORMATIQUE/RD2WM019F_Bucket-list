@@ -5,8 +5,8 @@ namespace App\Form\Models;
 class EventSearch
 {
 
-    private ?\DateTimeInterface $startDate;
-    private ?string $cityName;
+    private ?\DateTimeInterface $startDate = null;
+    private ?string $cityName = null;
 
     public function getStartDate(): ?\DateTimeInterface
     {
